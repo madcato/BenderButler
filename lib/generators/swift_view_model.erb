@@ -1,0 +1,58 @@
+//
+//  <%= @className %>.swift
+//  <%= @projectName %>
+//
+//  Created by <%= @creatorName %> on <%= @creationDate.strftime('%d/%m/%Y') %>.
+//  Copyright © <%= @creationDate.strftime('%Y') %> <%= @creatorName %>. All rights reserved.
+//
+
+import Foundation
+
+protocol <%= @className %>InteractorProtocol {
+}
+
+protocol <%= @className %>ViewModelProtocol {
+	<% @properties.each do |property| %>
+	var <%= property[:name] %>: <%= property[:type] %> { get }
+	var <%= property[:name] %>DidChange: ((<%= @className %>ViewModelProtocol) -> Void)? { get set }
+	<% end %>
+    init(interactor: <%= @className %>InteractorProtocol)
+	<% functions.each do |function| -%>func <%= function %>
+	<% end -%>	
+}
+
+class <%= @className %>ViewModel: <%= @className %>ViewModelProtocol {
+	<% @properties.each do |property| %>
+    var <%= property[:name] %>: <%= property[:type] %> {
+        didSet {
+            self.<%= property[:name] %>DidChange?(self)
+        }
+    }
+    var <%= property[:name] %>DidChange: ((<%= @className %>ViewModelProtocol) -> Void)?
+	<% end -%>
+    
+    var interactor: <%= @className %>InteractorProtocol
+    
+    required init(interactor: <%= @className %>InteractorProtocol) {
+	<% @properties.each do |property| -%>
+	<%= property[:name] %> = <#defaultValue#>
+	<% end -%>
+	self.interactor = interactor
+    }
+	<% @functions.each do |function| %>
+	func <%= function %> {
+	}
+	<% end -%>
+
+}
+
+
+//	var viewModel: GeofenceViewModelProtocol? {
+//        didSet {
+<% @properties.each do |property| -%>
+//            viewModel?.<%= property[:name] %>DidChange = { [unowned self] viewModel in
+//            }
+<% end -%>
+//        }
+//    }
+//

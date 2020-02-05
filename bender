@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'rake'
+
+path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+path = File.split(path)[0]
+
+require path + "/lib/generators/bender_generator.rb"
+require path + "/lib/benderyml/bender_file.rb"
+
+app = Rake.application
+app.init
+# do this as many times as needed
+app.add_import path + '/Rakefile'
+app.load_imports
+# this loads the Rakefile and other imports
+if File.exists?('Rakefile')
+  app.load_rakefile
+end
+
+if ARGV[0] == "generate" 
+  BenderGenerator.resolve()
+else
+  if ARGV.count == 0 
+    benderFile = BenderFile.new
+    benderFile.run
+  else
+    app[ARGV[0]].invoke ARGV.drop(1)
+  end
+end

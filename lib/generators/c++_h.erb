@@ -1,0 +1,22 @@
+//
+//  <%= @className %>.hpp
+//  <%= @projectName %>
+//
+//  Created by <%= @creatorName %> on <%= @creationDate.strftime('%d/%m/%Y') %>.
+//  Copyright © <%= @creationDate.strftime('%Y') %> <%= @creatorName %>. All rights reserved.
+//
+
+#ifndef <%= @define %>
+#define <%= @define %>
+
+<%= addBeginNamespaces %>
+class <%= @className %> {
+ public:
+    /*!
+        Default constructor
+    */
+    <%= @className %>();
+};
+
+<%= addEndNamespaces %>
+#endif  // <%= @define %>

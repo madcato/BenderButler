@@ -1,0 +1,46 @@
+require 'rake'
+require 'faker'
+require 'erb'
+require 'yaml'
+
+Faker::Config.locale = 'es'
+
+# doc: http://rake.rubyforge.org/doc/rakefile_rdoc.html
+
+src_files = Rake::FileList["*.json.erb"]
+src_yml_files = Rake::FileList["*.json.yml"]
+
+dst_files = src_files.ext('') # Eliminate .erb extension, output files are <name>.json
+dst_yml_files = src_yml_files.ext('') # Eliminate .erb extension, output files are <name>.json
+
+task :default => [dst_files, dst_yml_files].flatten
+
+rule '.json' => '.json.erb' do |task|
+  # cp task.source, task.name
+  puts "Generating #{task.name}"
+  template = ERB.new File.read(task.source), nil, "%"
+  File.write(task.name,template.result(binding))
+end
+
+rule '.json' => '.json.yml' do |task|
+  # cp task.source, task.name
+  puts "Updating #{task.name}"
+  
+  substs = YAML.load_file(task.source)
+  
+  text = File.read(task.name)
+  substs.each { |sub| 
+    puts sub["pattern"]
+    #/\\"Nombre\\":\\"[^,]*\\",/
+    text.gsub!(Regexp.new(sub["pattern"])) { |match| ERB.new(sub["subst"]).result(binding) }
+  }
+  File.write(task.name,text)
+end
+
+task :touch  do |task|
+  src_files.each do |file|
+    touch file
+  end
+end
+
+task :regenerate => [:touch, :default]

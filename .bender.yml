@@ -1,0 +1,14 @@
+repository: madcato/BenderButler
+
+install:
+  - ls *
+
+script:
+  - swift package build benderbutler
+
+after_failure:
+  - echo "Failuer"
+
+after_script:
+  - git add .
+  - git log

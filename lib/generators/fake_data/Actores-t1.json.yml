@@ -1,0 +1,12 @@
+-
+  pattern: \\"Nombre\\":\\"[^,]*\\",
+  subst: \"Nombre\":\"<%= Faker::Name.first_name.upcase %>\",
+-
+  pattern: \\"Apellido1\\":\\"[^,]*\\",
+  subst: \"Apellido1\":\"<%= Faker::Name.last_name.upcase %>\",
+-
+  pattern: \\"Apellido2\\":\\"[^,]*\\",
+  subst: \"Apellido2\":\"<%= Faker::Name.last_name.upcase %>\",
+-
+  pattern: \\"NombreCompleto\\":\\"[^,]*\\",
+  subst: \"NombreCompleto\":\"<%= Faker::Name.name.upcase %>\",

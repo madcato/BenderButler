@@ -1,0 +1,15 @@
+//
+//  <%= @className %>.cpp
+//  <%= @projectName %>
+//
+//  Created by <%= @creatorName %> on <%= @creationDate.strftime('%d/%m/%Y') %>.
+//  Copyright © <%= @creationDate.strftime('%Y') %> <%= @creatorName %>. All rights reserved.
+//
+
+#include "<%= @path %><%= @className %>.h"
+
+<%= addBeginNamespaces %>
+<%= @className %>::<%= @className %>() {
+}
+
+<%= addEndNamespaces %>
