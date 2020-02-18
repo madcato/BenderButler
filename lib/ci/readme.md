@@ -30,5 +30,6 @@ _Only needed when use email with `git am`_
 3. `post-receive`: Use this one to start CI.
 
 
+## ToDo
 
-PRUEBA2
+Create a bender command (`bender init ci`) to install hooks into a git repository. This command will create an `update` file into the git hooks directory. This file will launch the `bender` command
