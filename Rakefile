@@ -1,6 +1,9 @@
 require File.dirname(__FILE__) + '/lib/pomodoro'
 require File.dirname(__FILE__) + '/lib/generators/generator.rb'
 
+path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+path = File.split(path)[0]
+
 task :default => :pomodoro
 
 desc "Start Pomodoro. Arguments: issue_id <comment>"
@@ -19,6 +22,12 @@ desc "Indicate arguments as an array. Sample: `rake my_task[1,2]`"
 task :my_task, [:arg1, :arg2] do |task_name, args|
   puts "Args were: #{args}"
   puts "Task name is #{task_name}"
+end
+
+desc "CI commands"
+task :ci, [:command] do |task_name, args|
+  require path + "/lib/ci/bender_ci.rb"
+  BenderCi.execute(args[:command][0])
 end
 
 # task :say_hello do

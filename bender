@@ -5,9 +5,6 @@ require 'rake'
 path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
 path = File.split(path)[0]
 
-require path + "/lib/generators/bender_generator.rb"
-require path + "/lib/benderyml/bender_file.rb"
-
 app = Rake.application
 app.init
 # do this as many times as needed
@@ -18,10 +15,12 @@ if File.exists?('Rakefile')
   app.load_rakefile
 end
 
-if ARGV[0] == "generate" 
-  BenderGenerator.resolve()
+if ARGV[0] == "generate"
+  require path + "/lib/generators/bender_generator.rb"
+  BenderGenerator.resolve()  
 else
   if ARGV.count == 0 
+    require path + "/lib/benderyml/bender_file.rb"
     benderFile = BenderFile.new
     benderFile.run
   else
