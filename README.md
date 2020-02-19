@@ -1,12 +1,7 @@
 BenderButler
 ============
 
-Set of scripts for managing automated tasks with developement tools like: redmine, Xcode server, git. It's main porpouse is to perform automated tasks managed by a project manager tool.
-
-Prueba 
-
-Prueba
-
+Set of scripts for managing automated tasks with developement tools like: redmine, Xcode server, git, simple CI. It's main porpouse is to perform automated tasks managed by a project manager tool.
 
 ## Installation
 
@@ -174,3 +169,16 @@ The rest of the sections are executed in this order:
 6. **after\_script** Runs after main process
 
 If some of the commands provoke an error, an issue is created if **repository** is indicated and the execution stops. No other shell command is executed.
+
+## Simple CI
+
+Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to execute some script processing. This processing executes the `.bender.yml` file into your project base directory. Each time a `git push` is made into the server, the bender yml process is invocated.
+
+### Configuration
+
+1. Open a `ssh` session to the server where the git bare repository is located.
+2. Navigate where the git repository base directory is located.
+3. Execute `$ bender ci init`.
+
+In order to remove the CI processing, execute `$ bender ci remove`.
+
