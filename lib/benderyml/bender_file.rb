@@ -1,14 +1,9 @@
 require 'yaml'
 require 'open3'
-# require 'net/smtp'
-require 'octokit'
+require 'net/smtp'
+# require 'octokit'
 
 class BenderFile
-  def initialize
-    @phase = ["before_install", "install", "before_script",
-             "script", "after_script"]
-  end
-
   def run
     ymlFile = ".bender.yml"
     if File.exists?(ymlFile)
@@ -17,13 +12,15 @@ class BenderFile
       abort("#{ymlFile} file not found")
     end
   end
-  
+
   def process(ymlFile)
     config = YAML.load_file(ymlFile)
-    @phase.each do |phase|
-      commands = config[phase]
-      execute commands, phase, config
-    end
+    makePhase("script", config)
+  end
+
+  def makePhase(phase, config)
+    commands = config[phase]
+    execute commands, phase, config
   end
   
   def execute(commands, phase, config)
@@ -37,36 +34,32 @@ class BenderFile
     stdout, stderr, status = Open3.capture3(command)
     puts stdout
     puts stderr
-    if status.exitstatus != 0
+    if status.exitstatus != 0 and phase == "script"
       message = "\#\# #{command} in phase #{phase} failed\n\n\n```#{stderr}\n\n```"
-      send(message,config)
-      exit
-      if phase == "script"
-        commands = config["after_failure"]
-        execute commands, phase, config
-      end
+      sendM(message)
+      makePhase("after_failure", config)
     else
-      if phase == "script"
-        commands = config["after_success"]
-        execute commands, phase, config
-      end
+      makePhase("after_script", config) if phase == "script"
     end
   end
   
-  def send(message,config)
-    repository = config['repository']
-    if repository.nil?
-      puts message
-    else
-      # Provide authentication credentials
-      Octokit.configure do |c|
-        c.login = ENV["GITHUB_LOGIN"]
-        c.password = ENV["GITHUB_PASSWORD"]
-      end
-      Octokit.create_issue repository, "Bender failure", message
-    end
-  end
+  # def send(message,config)
+  #   repository = config['repository']
+  #   if repository.nil?
+  #     puts message
+  #   else
+  #     # Provide authentication credentials
+  #     Octokit.configure do |c|
+  #       c.login = ENV["GITHUB_LOGIN"]
+  #       c.password = ENV["GITHUB_PASSWORD"]
+  #     end
+  #     Octokit.create_issue repository, "Bender failure", message
+  #   end
+  # end
   
+  def sendM(message)
+    # system("echo #{message} | mail -s 'Bender task failed' dvela")
+  end
 end
 
 # require 'octokit'
