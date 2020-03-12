@@ -9,15 +9,18 @@ $oldrev  = ARGV[1]
 $newrev  = ARGV[2]
 $user    = ENV['USER']
 
+$project_running_dir = '%PROJECT_RUNNING_DIR%'
+
 puts "Launching bender yml"
-`bender yml #{$refname} #{$oldrev} #{$newrev} #{$user}`
+`ansible localhost -m shell -a "cd #{$project_running_dir} && bender yml #{$refname} #{$oldrev} #{$newrev} #{$user}`
 TEXT
 
 class BenderCi
-  def self.execute(command)
+  def self.execute(command, installDir)
     if command == "init"
       if current_dir_bare_git?
         open($fileName, "w") do |file|
+          $updateContent["%PROJECT_RUNNING_DIR%"] = installDir
           file << $updateContent
           puts("#{$fileName} created.")
         end
