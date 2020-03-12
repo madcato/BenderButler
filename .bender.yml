@@ -7,7 +7,7 @@ script:
   - swift package build benderbutler
 
 after_failure:
-  - echo "Failuer"
+  - echo "Failure"
 
 after_script:
   - git add .
