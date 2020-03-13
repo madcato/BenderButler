@@ -12,8 +12,10 @@ $user    = ENV['USER']
 $project_running_dir = '%PROJECT_RUNNING_DIR1%'
 
 puts "Launching bender yml"
-`/usr/local/bin/ansible %REMOTE_MACHINE% -m shell -a "cd %PROJECT_RUNNING_DIR2% && bender yml \#{$refname} \#{$oldrev} \#{$newrev} \#{$user}"`
+`/usr/local/bin/ansible %REMOTE_MACHINE% -m shell -a "cd %PROJECT_RUNNING_DIR2% && bender"`
 TEXT
+
+# yml \#{$refname} \#{$oldrev} \#{$newrev} \#{$user}
 
 class BenderCi
   def self.run(command, remoteMachine, installDir)
