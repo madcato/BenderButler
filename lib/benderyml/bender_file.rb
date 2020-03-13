@@ -1,6 +1,7 @@
 require 'yaml'
 require 'open3'
 require 'net/smtp'
+require 'tempfile'
 # require 'octokit'
 
 class BenderFile
@@ -36,10 +37,13 @@ class BenderFile
     puts stderr
     if status.exitstatus != 0 and phase == "script"
       message = "\#\# #{command} in phase #{phase} failed\n\n\n```#{stderr}\n\n```"
-      sendM(message)
+      sendM(message, false, config)
       makePhase("after_failure", config)
     else
-      makePhase("after_script", config) if phase == "script"
+      if phase == "script"
+        makePhase("after_script", config) 
+        sendM("Build ok", true, config)
+      end
     end
   end
   
@@ -57,8 +61,26 @@ class BenderFile
   #   end
   # end
   
-  def sendM(message)
-    # system("echo #{message} | mail -s 'Bender task failed' dvela")
+  def sendM(message, finished_ok, config)
+    to = config['config']['to']
+    subject = finished_ok ? config['config']['subject_ok'] : config['config']['subject_bad']
+    from = config['config']['from']
+    send(to, from, subject, message)
+  end
+
+  def send(to, from, subject, message)
+    body = <<EOF
+From: #{from}
+To: #{to}
+Subject: #{subject}
+
+#{message}
+EOF
+    file = Tempfile.new('bender_send_mail')
+    file.write(body)
+    file.close()
+    system("sendmail -f #{to} #{to} < #{file.path}")
+    file.unlink
   end
 end
 

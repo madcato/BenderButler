@@ -8,3 +8,9 @@ after_failure:
 after_script:
   - git add .
   - git log
+
+config:
+  to: veladan@me.com
+  from: bender@veladan.org
+  subject_bad: Error building benderbutler
+  subject_ok: Build finished ok
