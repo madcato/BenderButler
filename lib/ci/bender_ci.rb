@@ -16,7 +16,7 @@ puts "Launching bender yml"
 TEXT
 
 class BenderCi
-  def self.execute(command, installDir)
+  def self.run(command, installDir)
     if command == "init"
       if current_dir_bare_git?
         open($fileName, "w") do |file|
