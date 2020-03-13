@@ -12,7 +12,7 @@ $user    = ENV['USER']
 $project_running_dir = '%PROJECT_RUNNING_DIR1%'
 
 puts "Launching bender yml"
-`ansible %REMOTE_MACHINE% -m shell -a "cd %PROJECT_RUNNING_DIR2% && bender yml #{$refname} #{$oldrev} #{$newrev} #{$user}`
+`ansible %REMOTE_MACHINE% -m shell -a "cd %PROJECT_RUNNING_DIR2% && bender yml \#{$refname} \#{$oldrev} \#{$newrev} \#{$user}`
 TEXT
 
 class BenderCi
