@@ -24,6 +24,6 @@ else
     benderFile = BenderFile.new
     benderFile.run
   else
-    app[ARGV[0]].invoke ARGV.drop(1) ARGV.drop(2)
+    app[ARGV[0]].invoke ARGV.drop(1), ARGV.drop(2)
   end
 end
