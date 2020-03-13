@@ -12,14 +12,15 @@ $user    = ENV['USER']
 $project_running_dir = '%PROJECT_RUNNING_DIR%'
 
 puts "Launching bender yml"
-`ansible localhost -m shell -a "cd #{$project_running_dir} && bender yml #{$refname} #{$oldrev} #{$newrev} #{$user}`
+`ansible %REMOTE_MACHINE% -m shell -a "cd %PROJECT_RUNNING_DIR% && bender yml #{$refname} #{$oldrev} #{$newrev} #{$user}`
 TEXT
 
 class BenderCi
-  def self.run(command, installDir)
+  def self.run(command, remoteMachine, installDir)
     if command == "init"
       if current_dir_bare_git?
         open($fileName, "w") do |file|
+          $updateContent["%REMOTE_MACHINE%"] = remoteMachine
           $updateContent["%PROJECT_RUNNING_DIR%"] = installDir
           file << $updateContent
           puts("#{$fileName} created.")
@@ -31,7 +32,7 @@ class BenderCi
       system("rm #{$fileName}")
       puts("#{$fileName} removed.")
     else
-      puts("Usage: bender ci [init | remove]")
+      puts("Usage: bender ci [init | remove] <remoteMachine>  <installDir>")
     end
   end
   

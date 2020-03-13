@@ -24,10 +24,10 @@ task :my_task, [:arg1, :arg2] do |task_name, args|
   puts "Task name is #{task_name}"
 end
 
-desc "CI command. Argmuments ci <init|remove> <install_path>"
+desc "CI command. Argmuments ci <init|remove> <remote_machine> <install_path>"
 task :ci, [:param] do |task_name, args|
   require path + "/lib/ci/bender_ci.rb"
-  BenderCi.run(args.param[0], args.param[1])
+  BenderCi.run(args.param[0], args.param[1], args.param[2])
 end
 
 # task :say_hello do
