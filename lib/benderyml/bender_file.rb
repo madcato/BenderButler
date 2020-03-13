@@ -42,7 +42,8 @@ class BenderFile
     else
       if phase == "script"
         makePhase("after_script", config) 
-        sendM("Build ok", true, config)
+        message = "Build ok\n\n\n```#{stdout}\n\n```"
+        sendM(message, true, config)
       end
     end
   end
