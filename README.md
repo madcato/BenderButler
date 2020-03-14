@@ -172,6 +172,8 @@ If some of the commands provoke an error, an issue is created if **repository** 
 
 ## Simple CI
 
+THIS FUNCTIONALITY DOESN'T WORK AS EXPECTED. ON HOLD.
+
 Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to execute some script processing. This processing executes the `.bender.yml` file into your project base directory. Each time a `git push` is made into the server, the bender yml process is invocated.
 
 ### Requirements
@@ -183,7 +185,7 @@ Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to e
 1. Open a `ssh` session to the server where the git bare repository is located.
 2. Create a building directory cloning the repo into it.
 3. Navigate where the git repository base directory is located.
-4. Execute `$ bender ci init <remote_machine> <build_dir>`.
+4. Execute `$ bender ci init <user@remote_machine> <build_dir>`.
 
 In order to remove the CI processing, execute `$ bender ci remove`.
 
