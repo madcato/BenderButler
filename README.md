@@ -172,6 +172,8 @@ If some of the commands provoke an error, an issue is created if **repository** 
 
 ## Simple CI
 
+THIS SECTION DOESN'T WORK
+
 Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to execute some script processing. This processing executes the `.bender.yml` file into your project base directory. Each time a `git push` is made into the server, the bender yml process is invocated.
 
 ### Requirements
