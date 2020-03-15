@@ -19,7 +19,7 @@ TEXT
 
 class BenderCi
   def self.run(command, remoteMachine, installDir)
-    if command == "init"
+    if command == "init" and !remoteMachine.nil? and !isntallDir.nil?
       if current_dir_bare_git?
         open($fileName, "w") do |file|
           $updateContent["%REMOTE_MACHINE%"] = remoteMachine
@@ -35,7 +35,7 @@ class BenderCi
       system("rm #{$fileName}")
       puts("#{$fileName} removed.")
     else
-      puts("Usage: bender ci [init | remove] <remoteMachine>  <installDir>")
+      puts("Usage: bender ci [init | remove] <remoteMachine> <installDir>")
     end
   end
   
