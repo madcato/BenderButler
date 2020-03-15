@@ -19,7 +19,7 @@ TEXT
 
 class BenderCi
   def self.run(command, remoteMachine, installDir)
-    if command == "init" and !remoteMachine.nil? and !isntallDir.nil?
+    if command == "init" and !remoteMachine.nil? and !installDir.nil?
       if current_dir_bare_git?
         open($fileName, "w") do |file|
           $updateContent["%REMOTE_MACHINE%"] = remoteMachine
