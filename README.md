@@ -172,13 +172,11 @@ If some of the commands provoke an error, an issue is created if **repository** 
 
 ## Simple CI
 
-THIS FUNCTIONALITY DOESN'T WORK AS EXPECTED. ON HOLD.
-
 Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to execute some script processing. This processing executes the `.bender.yml` file into your project base directory. Each time a `git push` is made into the server, the bender yml process is invocated.
 
 ### Requirements
 
-* ansible
+* gitlab-runner [Install](https://docs.gitlab.com/runner/install/) [Documetnation](https://docs.gitlab.com/runner/commands/)
 
 ### Configuration
 
@@ -189,4 +187,4 @@ Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to e
 
 In order to remove the CI processing, execute `$ bender ci remove`.
 
-When the bare repo is updated, an ansible command is executed that launch `bender yml` into the building directory.
+When the bare repo is updated, gitlab-runner is started, this process read the file `.gitlab.yml` and run the build steps.

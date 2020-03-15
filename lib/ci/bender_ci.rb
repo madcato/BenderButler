@@ -11,8 +11,8 @@ $user    = ENV['USER']
 
 $project_running_dir = '%PROJECT_RUNNING_DIR1%'
 
-puts "Launching bender yml"
-`/usr/local/bin/ansible %REMOTE_MACHINE% -m shell -a "cd %PROJECT_RUNNING_DIR2% && bender"`
+puts "Launching gitlab-runner"
+`ssh %REMOTE_MACHINE% -t "cd %PROJECT_RUNNING_DIR2% && /usr/local/bin/gitlab-runner exec shell build"`
 TEXT
 
 # yml \#{$refname} \#{$oldrev} \#{$newrev} \#{$user}
