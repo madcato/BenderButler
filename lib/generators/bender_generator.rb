@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/swift_view_model.rb'
 require File.dirname(__FILE__) + '/c++.rb'
+require File.dirname(__FILE__) + '/ror_scheme/codable_generator.rb'
 
 class BenderGenerator
 
@@ -50,6 +51,9 @@ class BenderGenerator
                            functions)
       fileName = File.join('./', className )
       list.save(fileName)
+    end
+    if generator == "codables"
+      execute_ror_scheme(className)  # file name
     end
   end
 end
