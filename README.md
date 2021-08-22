@@ -125,6 +125,14 @@ Sample usage:
 
 * *NAM1 and NAM2 are namespaces names*
 
+### Swift Codable structs from a `scheme.rb` Rails config file
+
+As input you must set the path of an `scheme.rb` file (similar to the one called `scheme_sample.rb` in this directory). As output, a group of files will be created: each one with the name of one decodable class.
+
+sample usage:
+
+    $ bender generate codables ./lib/generators/ror_scheme/schema_sample.rb
+
 ## .bender.yml
 
 Create this file to run scripts. 
