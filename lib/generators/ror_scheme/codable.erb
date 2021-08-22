@@ -5,9 +5,11 @@ import Foundation
 // API Version: <%= @version %>
 
 struct <%= @class_name %>: Codable {
-  <% @properties.each do |property| %>var <%= property[:name] %>: <%= property[:type] %>
+  let identifier: Int
+  <% @properties.each do |property| %>let <%= property[:name] %>: <%= property[:type] %>
   <% end %>
   enum CodingKeys: String, CodingKey {
+    case identifier = "id"
   <% @properties.each do |property| %>  case <%= property[:name] %> = "<%= property[:original_name] %>"
   <% end %>}
 }

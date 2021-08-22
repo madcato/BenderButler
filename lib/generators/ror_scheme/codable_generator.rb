@@ -5,7 +5,7 @@ module ActiveRecord
     boolean: "Bool",
     date: "Date",
     datetime: "Date",
-    decimal: "Decima",
+    decimal: "Decimal",
     float: "Float",
     integer: "Int",
     primary_key: "invalid",
@@ -40,8 +40,8 @@ module ActiveRecord
         print("Invalid type: #{m.inspect}, args: #{args.inspect}")
         exit()
       end
-      optional = ""
-      optional = "?" if args[1].nil? == false && args[1][:null] == true
+      optional = "?"
+      optional = "" if args[1].nil? == false && args[1][:null] == false
       @fields.append({field_name: args[0], field_tpye: "#{type}#{optional}"})
     end
 
