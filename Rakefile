@@ -47,3 +47,9 @@ end
 #   end
 #
 # end
+
+desc "kebab case. Convert string to kebab case, removing special chars and tildes"
+task :kebab, [:param] do |task_name, args|
+  require path + '/lib/util/kebab.rb'
+  print args.param.to_s.kebabcase
+end
