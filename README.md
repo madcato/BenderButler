@@ -198,3 +198,9 @@ Using [git-hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to e
 In order to remove the CI processing, execute `$ bender ci remove`.
 
 When the bare repo is updated, gitlab-runner is started, this process read the file `.gitlab.yml` and run the build steps.
+
+## rake commands
+### kebab
+Transforms a string to kebacase format: "CaseStudy 3 comm" becomes -> "casestudy-3-comm"
+
+    $ rake kebab\["CaseStudy 3 comm"\]
