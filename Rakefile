@@ -1,16 +1,9 @@
-require File.dirname(__FILE__) + '/lib/pomodoro'
 require File.dirname(__FILE__) + '/lib/generators/generator.rb'
 
 path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
 path = File.split(path)[0]
 
-task :default => :pomodoro
-
-desc "Start Pomodoro. Arguments: issue_id <comment>"
-task :pomodoro, [:id, :comment] do |task_name, args|
-  pomodoro(args[:id], args[:comment])
-end
-
+# task :default => :pomodoro
 
 desc "Generate sample file. Arguments: file_name"
 task :gen_sample, [:file_name] do |task_name, args|
@@ -18,11 +11,11 @@ task :gen_sample, [:file_name] do |task_name, args|
   list.save(File.join('./', args[:file_name]))
 end
 
-desc "Indicate arguments as an array. Sample: `rake my_task[1,2]`"
-task :my_task, [:arg1, :arg2] do |task_name, args|
-  puts "Args were: #{args}"
-  puts "Task name is #{task_name}"
-end
+# desc "Indicate arguments as an array. Sample: `rake my_task[1,2]`"
+# task :my_task, [:arg1, :arg2] do |task_name, args|
+#   puts "Args were: #{args}"
+#   puts "Task name is #{task_name}"
+# end
 
 desc "CI command. Argmuments ci <init|remove> <remote_machine> <install_path>"
 task :ci, [:param] do |task_name, args|
