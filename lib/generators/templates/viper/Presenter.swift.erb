@@ -1,0 +1,11 @@
+class <%= @className %>Presenter: BasePresenterProtocol {
+    weak var view: <%= @className %>ViewProtocol?
+    var interactor: <%= @className %>InteractorProtocol?
+    var router: <%= @className %>RouterProtocol?
+    
+
+}
+
+extension <%= @className %>Presenter: <%= @className %>PresenterProtocol {
+
+}

@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/generator_class.rb'
+require File.dirname(__FILE__) + '/generator_directory_class.rb'
 require File.dirname(__FILE__) + '/swift_view_model.rb'
 require File.dirname(__FILE__) + '/c++.rb'
 require File.dirname(__FILE__) + '/ror_scheme/codable_generator.rb'
@@ -10,10 +12,12 @@ class BenderGenerator
       puts " Sample: bender generate view_model Whisky ProjectName status:WhiskyStatus func:run\\(once:Bool\\)"
       exit -1
     end
+    
     extras = ARGV
     extras.shift # generate
     generator = extras.shift
     className = extras.shift
+    argv = extras.dup
     projectName = extras.shift
     properties = []
     functions = []
@@ -26,7 +30,6 @@ class BenderGenerator
         properties << { name: values[0], type: values[1]}
       end
     end
-    
     if generator == "view_model"
       list = SwiftViewModel.new(className, 
                               projectName,
@@ -39,8 +42,7 @@ class BenderGenerator
       else
         list.save(fileName)
       end
-    end
-    if generator == "c++"
+    elsif generator == "c++"
       namespaces = className.split(":")
       className = namespaces.pop # remove last
       list = CPlusPlus.new(className, 
@@ -51,9 +53,21 @@ class BenderGenerator
                            functions)
       fileName = File.join('./', className )
       list.save(fileName)
-    end
-    if generator == "codables"
+    elsif generator == "codables"
       execute_ror_scheme(className)  # file name
+    elsif Dir.exists?(File.dirname(__FILE__) + "/templates/" + generator)
+      gen = GeneratorDirectoryClass.new(className, argv)
+      gen.process(File.dirname(__FILE__) + "/templates/" + generator)
+    elsif File.exists(File.dirname(__FILE__) + "/templates/" + generator + ".erb")
+        File.open(File.dirname(__FILE__) + "/templates/" + generator + ".erb", "r") do |f|
+          template = f.read()
+          f.close()
+          gen = GeneratorClass.new(template, className, argv)
+          fileName = File.join('./', className + ".swift")
+          gen.save(fileName)
+        end
+    else 
+      puts "Generator #{generator} not found"
     end
   end
 end

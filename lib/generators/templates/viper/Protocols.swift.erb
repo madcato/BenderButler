@@ -1,0 +1,33 @@
+import UIKit
+
+//----------------------------
+// MARK: - View
+//----------------------------
+protocol <%= @className %>ViewProtocol: BaseViewProtocol {
+    func configureView()
+}
+
+//----------------------------
+// MARK: - Interactor
+//----------------------------
+protocol <%= @className %>InteractorProtocol {
+    var presenter: <%= @className %>PresenterProtocol? { get set }
+
+}
+
+//----------------------------
+// MARK: - Presenter
+//----------------------------
+protocol <%= @className %>PresenterProtocol: BasePresenterProtocol {
+    var view: <%= @className %>ViewProtocol? { get set }
+    var interactor: <%= @className %>InteractorProtocol? { get set }
+    var router: <%= @className %>RouterProtocol? { get set }
+
+}
+
+//----------------------------
+// MARK: - Router
+//----------------------------
+protocol <%= @className %>RouterProtocol : BaseRouterProtocol {
+    static func launchModule() -> UIViewController?
+}
