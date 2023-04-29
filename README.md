@@ -204,3 +204,37 @@ When the bare repo is updated, gitlab-runner is started, this process read the f
 Transforms a string to kebacase format: "CaseStudy 3 comm" becomes -> "casestudy-3-comm"
 
     $ rake kebab\["CaseStudy 3 comm"\]
+
+## iOS CI
+
+Create a `.bender-ios` file in the root of your project. This file contains the configuration for the CI process.
+
+### Example of .bender-ios file
+
+```rb
+# Sample file
+
+desc "Building..."
+lane :build do
+  build(:scheme => "Bender")
+end
+
+desc "Testing..."
+lane :test do
+  test(:scheme => "Bender")
+end
+
+desc "Deploying..."
+lane :deploy do
+  archive(scheme: "Bender")
+  export(exportOptionsPlist: "ExportOptions.plist")
+  upload(apiKey: ENV["APPSTORE_API_KEY_ID"], apiIssuer: ENV["APPSTORE_ISSUER_ID"])
+end
+```
+
+Run each lane by executing:
+```bash
+  $ bender ios build
+  $ bender ios test
+  $ bender ios deploy
+```
