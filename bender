@@ -17,13 +17,14 @@ end
 
 if ARGV[0] == "generate"
   require path + "/lib/generators/bender_generator.rb"
-  BenderGenerator.resolve()  
+  BenderGenerator.resolve()
+elsif ARGV[0] == "ios"
+  require path + "/lib/ci/custom_ci.rb"
+  CustomCI.resolve()
+elsif ARGV.count == 0 
+  require path + "/lib/benderyml/bender_file.rb"
+  benderFile = BenderFile.new
+  benderFile.run
 else
-  if ARGV.count == 0 
-    require path + "/lib/benderyml/bender_file.rb"
-    benderFile = BenderFile.new
-    benderFile.run
-  else
-    app[ARGV[0]].invoke(ARGV.drop(1))
-  end
+  app[ARGV[0]].invoke(ARGV.drop(1))
 end
