@@ -42,9 +42,30 @@ end
 # end
 
 desc "kebab case. Convert string to kebab case, removing special chars and tildes"
-task :kebab do
+task :kebab, [:param] do |task_name, args|
   require path + '/lib/util/kebab.rb'
-  print 'Type a string: '
-  text = STDIN.gets.chomp
+  text = args.param.join(" ")
   print text.to_s.kebabcase
+end
+
+desc "ios: build, test and deploy and iOS app"
+task :ios, [:param] do |task_name, args|
+  require path + "/lib/ci/custom_ci.rb"
+  CustomCI.resolve(args.param)
+end
+
+desc "Generators"
+task :generate, [:param] do |task_name, args|
+  require path + "/lib/generators/bender_generator.rb"
+  BenderGenerator.resolve()
+end
+
+Rake::TaskManager.record_task_metadata = true
+desc "List tasks"
+task :tasks do
+  Rake.application.options.show_all_tasks = true
+  Rake.application.options.show_tasks = :tasks  # this solves sidewaysmilk problem
+  Rake.application.options.show_task_pattern = //
+  Rake.application.options.full_description = true
+  Rake.application.display_tasks_and_comments()
 end

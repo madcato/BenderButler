@@ -1,9 +1,9 @@
 class CustomCI
-  def self.resolve
-    raise "Invalid number of arguments" if ARGV.count < 2
+  def self.resolve(args)
+    raise "Invalid number of arguments: set task name" if args.count < 1
     $lane_done = false
-    command = ARGV[1]
-    bender_ci_file = File.join(Dir.pwd, ".bender-ci")
+    command = args[1]
+    bender_ci_file = File.join(Dir.pwd, ".bender-ios")
     if File.exists?(bender_ci_file)
       File.open(bender_ci_file, 'r') do |file|
         script = file.read
@@ -11,10 +11,30 @@ class CustomCI
         # binding_obj.local_variable_set(:object, CustomCIBuilder(command))
         # eval(script, binding_obj)
         eval(script)
-        puts "Error: lane #{command} not found. Watch .bender-ci file" unless $lane_done
+        puts "Error: lane #{command} not found. Watch .bender-ios file" unless $lane_done
       end
     else
-        puts "No CI file found"
+        puts "No CI file found. Create .bender-ios file, like: \n\n" + <<-HEREDOC
+# Sample file
+
+desc "Building..."
+lane :build do
+  build(:scheme => "Bender")
+end
+
+desc "Testing..."
+lane :test do
+  test(:scheme => "Bender")
+end
+
+desc "Deploying..."
+lane :deploy do
+  archive(scheme: "Bender")
+  export(exportOptionsPlist: "ExportOptions.plist")
+  upload(apiKey: ENV["APPSTORE_API_KEY_ID"], apiIssuer: ENV["APPSTORE_ISSUER_ID"])
+end
+HEREDOC
+
     end
   end
 end

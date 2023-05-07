@@ -15,13 +15,7 @@ if File.exists?('Rakefile')
   app.load_rakefile
 end
 
-if ARGV[0] == "generate"
-  require path + "/lib/generators/bender_generator.rb"
-  BenderGenerator.resolve()
-elsif ARGV[0] == "ios"
-  require path + "/lib/ci/custom_ci.rb"
-  CustomCI.resolve()
-elsif ARGV.count == 0 
+if ARGV.count == 0 
   require path + "/lib/benderyml/bender_file.rb"
   benderFile = BenderFile.new
   benderFile.run
