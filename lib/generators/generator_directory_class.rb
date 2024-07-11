@@ -20,11 +20,16 @@ class GeneratorDirectoryClass
     ERB.new(@template, nil, '-').result(binding)
   end
 
-  def process(template_dir)
-    Dir.glob(File.join(template_dir, '*.erb')).each do |template_file|
+  def process(template_dir, output_base_dir = '.')
+    Dir.glob(File.join(template_dir, '**', '*.erb')).each do |template_file|
+      unless File.directory?(template_file)
         @template = File.read(template_file)
-        output_file = File.join("#{@className}_#{File.basename(template_file, '.erb')}")
+        relative_path = template_file.sub(template_dir, '')
+        output_dir = File.join(output_base_dir, File.dirname(relative_path))
+        FileUtils.mkdir_p(output_dir)
+        output_file = File.join(output_dir, "#{@className}#{File.basename(template_file, '.erb')}")
         save(output_file)
+      end
     end
   end
 
