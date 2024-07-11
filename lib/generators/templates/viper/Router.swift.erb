@@ -1,11 +1,3 @@
-//
-//  ContractInfoRouter.swift
-//  Xfera
-//
-//  Created by Sonia Giraldez Lozano on 29/07/2020.
-//  Copyright © 2020 Xfera Consumer Finance EFC SA. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import ApiHB
@@ -17,12 +9,12 @@ class <%= @className %>Router: BaseRouter, <%= @className %>RouterProtocol {
     // MARK: - Launcher Initializer
     //----------------------------
     @discardableResult
-    static func launchModule(product: Product) -> UIViewController? {
+    static func launchModule() -> UIViewController? {
         if let view = StoryboardHandler.instantiateViewController(.contractInfo) as? <%= @className %>ViewController {
                     
             var interactor: <%= @className %>InteractorProtocol = <%= @className %>Interactor()
             let router: <%= @className %>RouterProtocol = <%= @className %>Router()
-            var presenter: <%= @className %>PresenterProtocol = <%= @className %>Presenter(product: product)
+            var presenter: <%= @className %>PresenterProtocol = <%= @className %>Presenter()
 
             view.presenter = presenter
             presenter.view = view
