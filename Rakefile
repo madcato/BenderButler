@@ -69,3 +69,9 @@ task :tasks do
   Rake.application.options.full_description = true
   Rake.application.display_tasks_and_comments()
 end
+
+desc "Create a remote git repository from a local one"
+task :remotize, [:param] do |t, args|
+  require path + "/lib/git-remote.rb" # this is the file that contains our method. It's called remotizer and it takes two arguments - project_path (the local git repo) & server_url( remote repository url ) . The code inside of them will handle creating a new Git Remote for your existing Project
+  remotize(args.param[0], args.param[1])
+end

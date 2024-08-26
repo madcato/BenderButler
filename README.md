@@ -133,6 +133,13 @@ sample usage:
 
     $ bender generate codables ./lib/generators/ror_scheme/schema_sample.rb
 
+### Issues generator scaffold
+
+This generator creates a scaffold for an issue creator script. It generates:
+- An issues directory
+- A `kanban.md` file
+- A `create_issus.sh` script to generate issue files.
+
 ## .bender.yml
 
 Create this file to run scripts. 
@@ -238,3 +245,10 @@ Run each lane by executing:
   $ bender ios test
   $ bender ios deploy
 ```
+
+## remotize
+
+Generates a bare git repository into a remote server, and configure de origin remote in the local git configuration.
+
+Sample:
+$ bander remotize project_name git@server.local
