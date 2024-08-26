@@ -11,7 +11,7 @@ app.init
 app.add_import path + '/Rakefile'
 app.load_imports
 # this loads the Rakefile and other imports
-if File.exists?('Rakefile')
+if File.exist?('Rakefile')
   app.load_rakefile
 end
 

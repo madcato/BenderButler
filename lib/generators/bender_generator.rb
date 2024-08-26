@@ -55,10 +55,10 @@ class BenderGenerator
       list.save(fileName)
     elsif generator == "codables"
       execute_ror_scheme(className)  # file name
-    elsif Dir.exists?(File.dirname(__FILE__) + "/templates/" + generator)
+    elsif Dir.exist?(File.dirname(__FILE__) + "/templates/" + generator)
       gen = GeneratorDirectoryClass.new(className, argv)
       gen.process(File.dirname(__FILE__) + "/templates/" + generator)
-    elsif File.exists(File.dirname(__FILE__) + "/templates/" + generator + ".erb")
+    elsif File.exist(File.dirname(__FILE__) + "/templates/" + generator + ".erb")
         File.open(File.dirname(__FILE__) + "/templates/" + generator + ".erb", "r") do |f|
           template = f.read()
           f.close()
