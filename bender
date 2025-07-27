@@ -10,5 +10,10 @@ app.init
 # do this as many times as needed
 app.add_import path + '/Rakefile'
 app.load_imports
+# this loads the Rakefile and other imports
+if File.exist?('Rakefile')
+  app.load_rakefile
+end
 
 app[ARGV[0]].invoke(ARGV.drop(1))
+
